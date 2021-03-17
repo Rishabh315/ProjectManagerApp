@@ -25,6 +25,7 @@ public class BasicBackendController {
 		@PostMapping("/edit/{id}")
 		public boolean updateUserDetails(@PathVariable Integer id,@RequestBody UserDetails user) {
 			System.out.println(user.getUserName());
+			System.out.println(user.getUserPhoneNum());
 			service.updateUserDetails(user, id);
 			return true;
 		}
