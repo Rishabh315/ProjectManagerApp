@@ -39,10 +39,11 @@ public class ServiceClass {
 	
 
 //	 view the user Information by using id
-	public Optional<UserDetails> viewUserDetails(Integer id) {
-		
-	          return repo.findById(id); 
+   public List<UserDetails> viewAllUserDetails() {
+		return (List<UserDetails>) repo.findAll();
 	}
+		
+		
 
 	
 	
@@ -55,8 +56,9 @@ public class ServiceClass {
 		
 		
 	}
-		
-		
+
+
+	
 		
 	
 }
