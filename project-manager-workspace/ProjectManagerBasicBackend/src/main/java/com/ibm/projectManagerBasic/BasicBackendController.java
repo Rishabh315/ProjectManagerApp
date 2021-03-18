@@ -1,5 +1,6 @@
 package com.ibm.projectManagerBasic;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,12 +34,11 @@ public class BasicBackendController {
 		
 		
 //		 view the user Information by using id
-		@RequestMapping("/view/{id}")
-		public Optional<UserDetails> viewUserDetails(@PathVariable Integer id) {
-			
-			return service.viewUserDetails(id);
-			
+		@RequestMapping("/view")
+		List<UserDetails> viewAllUserDetails(){
+			return service.viewAllUserDetails();
 		}
+		
 		
 //		  Validate the user password from database
 		@PostMapping("/pwdvalidation")
