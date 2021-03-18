@@ -1,7 +1,10 @@
 package com.ibm.projectManager;
 
-import java.util.Arrays;
+
 import java.util.List;
+import java.util.Optional;
+import java.util.Arrays;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,6 +44,27 @@ public class ApplicationController {
 		boolean dataEdited = restTemplate.postForObject(url, user, Boolean.class);
 		return "The details are edited successfully";
 	}
+	
+	@RequestMapping("/UserDetails/{id}")
+	public UserDetails getUserById(@PathVariable int id) {
+	url = "http://localhost:8084/backendBasic/user/" +id;
+	UserDetails getUser = restTemplate.getForObject(url,  UserDetails.class);
+	return getUser;
+	}
+	
+	
+	@RequestMapping("/UserDetails/name/{userName}")
+	 public List<UserDetails> getUserByName(@PathVariable String userName) {
+	    url ="http://localhost:8084/backendBasic/user/name/" + userName;
+	   List<UserDetails> getUser = restTemplate.getForObject(url, List.class);
+	    return getUser;
+	  }
+	
+	
+	
+	
+	
+	
 
 
 	

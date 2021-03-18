@@ -36,6 +36,24 @@ public class ServiceClass {
 	public void updateUserDetails(UserDetails user, Integer id) {
 		repo.updateUserDetails(user.getUserName(), user.getUserPassword(), user.getUserDesignation(), id);
 	}
+
+
+//get users by id
+	   public Optional<UserDetails> getUserById(int id) {
+		return repo.findById(id);
+	}
+
+// get users by name
+	public List<UserDetails> getUserByName(String userName) {
+		return repo.findByUserName(userName);
+		}
+
+	}
+		
+		
+	
+
+
 	
 
 
