@@ -1,5 +1,8 @@
 package com.ibm.projectManagerBasic;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +34,19 @@ public class BasicBackendController {
 			return true;
 		}
 		
+//		 view the user Information by using id
+		@RequestMapping("/view")
+		List<UserDetails> viewAllUserDetails(){
+			return service.viewAllUserDetails();
+		}
+		
+		
+//		  Validate the user password from database
+		@PostMapping("/pwdvalidation")
+		public  boolean validatePassword(@RequestBody UserDetails user) {
+			System.out.println(user.getUserName());
+			 return service.validatePassword(user);
+			
 		@GetMapping("/delete/{id}")
 		public boolean deleteUserById(@PathVariable Integer id) {
 			service.deleteUserById(id);

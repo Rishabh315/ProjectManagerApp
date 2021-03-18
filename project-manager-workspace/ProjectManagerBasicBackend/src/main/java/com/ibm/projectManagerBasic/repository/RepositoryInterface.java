@@ -21,4 +21,7 @@ public interface RepositoryInterface extends CrudRepository<UserDetails, Integer
 	@Modifying
 	@Transactional
 	public void updateUserDetails(String name, String password, String designation, Integer id); 
+	
+	@Query(value = "select userPassword from UserDetails where userName=?1 ", nativeQuery = true)
+	public String findByUserName(String userName);
 }
