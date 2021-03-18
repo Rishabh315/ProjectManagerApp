@@ -35,4 +35,9 @@ public class ServiceClass {
 	public void updateUserDetails(UserDetails user, Integer id) {
 		repo.updateUserDetails(user.getUserName(), user.getUserPassword(), user.getUserDesignation(), id);
 	}
+	
+	public void deleteUserById(Integer id) {
+		repo.deleteById(id);
+	}
 }
+   
