@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,7 +34,6 @@ public class BasicBackendController {
 			return true;
 		}
 		
-		
 //		 view the user Information by using id
 		@RequestMapping("/view")
 		List<UserDetails> viewAllUserDetails(){
@@ -46,6 +47,9 @@ public class BasicBackendController {
 			System.out.println(user.getUserName());
 			 return service.validatePassword(user);
 			
-			
+		@GetMapping("/delete/{id}")
+		public boolean deleteUserById(@PathVariable Integer id) {
+			service.deleteUserById(id);
+			return true;
 		}
 }

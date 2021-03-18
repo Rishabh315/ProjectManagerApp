@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,6 +42,7 @@ public class ApplicationController {
 		return "The details are edited successfully";
 	}
 
+
 	
 // view the user Information by using id
 	@RequestMapping("/viewUserData")
@@ -69,4 +71,11 @@ public class ApplicationController {
 
 	}
 
+	@DeleteMapping("/deleteUserById/{id}")
+	public String deleteUserById(@PathVariable int id) {
+		url = "http://localhost:8084/backendBasic/delete/" + id;
+		boolean userDeleted = restTemplate.getForObject(url,  Boolean.class);
+		
+		return "User is deleted successfully";
+	}
 }
