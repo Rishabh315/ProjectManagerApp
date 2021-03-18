@@ -1,5 +1,7 @@
 package com.ibm.projectManagerBasic;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,5 +29,23 @@ public class BasicBackendController {
 			System.out.println(user.getUserName());
 			service.updateUserDetails(user, id);
 			return true;
+		}
+		
+		
+//		 view the user Information by using id
+		@RequestMapping("/view/{id}")
+		public Optional<UserDetails> viewUserDetails(@PathVariable Integer id) {
+			
+			return service.viewUserDetails(id);
+			
+		}
+		
+//		  Validate the user password from database
+		@PostMapping("/pwdvalidation")
+		public  boolean validatePassword(@RequestBody UserDetails user) {
+			System.out.println(user.getUserName());
+			 return service.validatePassword(user);
+			
+			
 		}
 }

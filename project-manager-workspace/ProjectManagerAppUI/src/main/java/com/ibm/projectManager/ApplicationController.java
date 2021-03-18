@@ -14,27 +14,51 @@ import com.ibm.projectManager.bean.UserDetails;
 @RestController
 @RequestMapping("/api")
 public class ApplicationController {
-	
+
 	String url = "";
-	
+
 	@Autowired
 	RestTemplate restTemplate;
-	
+
 	@PostMapping("/addUserData")
 	public String addUserData(@RequestBody UserDetails user) {
 		url = "http://localhost:8084/backendBasic/add";
 		boolean isPhoneNumMatched = restTemplate.postForObject(url, user, Boolean.class);
-		if(!isPhoneNumMatched) {
+		if (!isPhoneNumMatched) {
 			return "Your account was created successfully";
-		}else {
+		} else {
 			return "Your account couldn't be created as Phone Num you entered is already used.";
 		}
 	}
-	
+
 	@PostMapping("/editUserData/{id}")
 	public String editUserData(@PathVariable int id, @RequestBody UserDetails user) {
 		url = "http://localhost:8084/backendBasic/edit/" + id;
 		boolean dataEdited = restTemplate.postForObject(url, user, Boolean.class);
 		return "The details are edited successfully";
 	}
+
+	
+// view the user Information by using id
+	@RequestMapping("/viewUserData/{id}")
+	public String viewUserData(@PathVariable int id) {
+		url = "http://localhost:8084/backendBasic/view/" + id;
+		UserDetails result = restTemplate.getForObject(url, UserDetails.class, id);
+		return "The details are displayed successfully";
+
+	}
+	
+
+//	  Validate the user password from database
+	@PostMapping("/pwdValidation")
+	public String pwdValidation(@RequestBody UserDetails user) {
+		url = "http://localhost:8084/backendBasic/pwdvalidation/";
+		boolean ispwd = restTemplate.postForObject(url, user, Boolean.class);
+		if (ispwd)
+			return "your password is correct";
+		else
+			return "password is incorrect";
+
+	}
+
 }
