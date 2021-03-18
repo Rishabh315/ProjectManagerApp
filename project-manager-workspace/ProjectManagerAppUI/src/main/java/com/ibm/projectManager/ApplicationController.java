@@ -1,5 +1,8 @@
 package com.ibm.projectManager;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,11 +43,16 @@ public class ApplicationController {
 
 	
 // view the user Information by using id
-	@RequestMapping("/viewUserData/{id}")
+	@RequestMapping("/viewUserData")
 	public String viewUserData(@PathVariable int id) {
-		url = "http://localhost:8084/backendBasic/view/" + id;
-		UserDetails result = restTemplate.getForObject(url, UserDetails.class, id);
-		return "The details are displayed successfully";
+		url = "http://localhost:8084/backendBasic/view/" ;
+      Object []datafetched = restTemplate.getForObject(url, Object[].class);
+         List<Object> list= Arrays.asList(datafetched);
+		if(datafetched!=null)
+		return "Display all users data successfully";
+		else
+			return "There is no users found";
+		
 
 	}
 	
