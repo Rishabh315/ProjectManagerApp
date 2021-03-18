@@ -2,10 +2,7 @@ package com.ibm.projectManager;
 
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Arrays;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +24,8 @@ public class ApplicationController {
 	@Autowired
 	RestTemplate restTemplate;
 
+	
+//	Function for adding user data-------------------------------------------
 	@PostMapping("/addUserData")
 	public String addUserData(@RequestBody UserDetails user) {
 		url = "http://localhost:8084/backendBasic/add";
@@ -37,69 +36,79 @@ public class ApplicationController {
 			return "Your account couldn't be created as Phone Num you entered is already used.";
 		}
 	}
-
+//-----------------------------------------------------------------------------------------
+	
+	//Function for editing user data by userId---------------------------------------------
 	@PostMapping("/editUserData/{id}")
 	public String editUserData(@PathVariable int id, @RequestBody UserDetails user) {
 		url = "http://localhost:8084/backendBasic/edit/" + id;
 		boolean dataEdited = restTemplate.postForObject(url, user, Boolean.class);
 		return "The details are edited successfully";
 	}
+//-----------------------------------------------------------------------------------------
 	
-	@RequestMapping("/UserDetails/{id}")
-	public UserDetails getUserById(@PathVariable int id) {
-	url = "http://localhost:8084/backendBasic/user/" +id;
-	UserDetails getUser = restTemplate.getForObject(url,  UserDetails.class);
-	return getUser;
-	}
-	
-	
-	@RequestMapping("/UserDetails/name/{userName}")
-	 public List<UserDetails> getUserByName(@PathVariable String userName) {
-	    url ="http://localhost:8084/backendBasic/user/name/" + userName;
-	   List<UserDetails> getUser = restTemplate.getForObject(url, List.class);
-	    return getUser;
-	  }
-	
-	
-	
-	
-	
-	
-
-
-	
-// view the user Information by using id
-	@RequestMapping("/viewUserData")
+	//Function for viewing All user data---------------------------------------------------
+	@RequestMapping("/viewAllUserData")
 	public String viewAllUsersData() {
-		url = "http://localhost:8084/backendBasic/view" ;
-      Object []datafetched = restTemplate.getForObject(url, Object[].class);
-         List<Object> list= Arrays.asList(datafetched);
-		if(datafetched!=null)
-		return "Display all users data successfully";
-		else
-			return "There is no users found";
+		url = "http://localhost:8084/backendBasic/viewAll" ;
+		Object []datafetched = restTemplate.getForObject(url, Object[].class);
+        List<Object> list= Arrays.asList(datafetched);
 		
-
-	}
-	
-
-//	  Validate the user password from database
-	@PostMapping("/pwdValidation")
-	public String pwdValidation(@RequestBody UserDetails user) {
-		url = "http://localhost:8084/backendBasic/pwdvalidation/";
-		boolean ispwd = restTemplate.postForObject(url, user, Boolean.class);
-		if (ispwd)
-			return "your password is correct";
+        if(datafetched!=null)
+        	return list.toString();
 		else
-			return "password is incorrect";
-
+			return "No user was found";
 	}
-
+//-----------------------------------------------------------------------------------------
+	
+	//Function for deleting user data by userId--------------------------------------------
 	@DeleteMapping("/deleteUserById/{id}")
 	public String deleteUserById(@PathVariable int id) {
 		url = "http://localhost:8084/backendBasic/delete/" + id;
 		boolean userDeleted = restTemplate.getForObject(url,  Boolean.class);
-		
 		return "User is deleted successfully";
 	}
+//-----------------------------------------------------------------------------------------	
+	
+	//Function for finding user by userId
+	@GetMapping("/findUserById/{id}")
+	public String getUserById(@PathVariable int id) {
+	url = "http://localhost:8084/backendBasic/findUserById/" +id;
+	UserDetails user = restTemplate.getForObject(url, UserDetails.class);
+	if(user == null){
+		return "The user with Id " + id + " does not exist in database.";
+	}
+	else {
+		return user.toString();
+		}
+	}
+//-----------------------------------------------------------------------------------------
+	
+	//Function for finding user by userName	
+	@GetMapping("/findUserByName/{userName}")
+	public String getUserByName(@PathVariable String userName) {
+	   url ="http://localhost:8084/backendBasic/findUserByName/" + userName;
+	   List<UserDetails> listOfUsers = restTemplate.getForObject(url, List.class);
+	   if(listOfUsers.size() < 1) {
+		   return "The user was not found in the database.";
+	   }
+	   else {
+		   return listOfUsers.toString(); 
+	   }
+	}
+//-----------------------------------------------------------------------------------------	
+	
+	//check the user password from database
+	@PostMapping("/checkPassword")
+	public String checkPassword(@RequestBody UserDetails user) {
+		url = "http://localhost:8084/backendBasic/checkPassword";
+		int condition = restTemplate.postForObject(url, user, Integer.class);
+		if (condition == 1)
+			return "Your password is correct.";
+		else if(condition == 0)
+			return "The password is incorrect.";
+		else
+			return "The name entered is incorrect.";
+	}
 }
+//-----------------------------------------------------------------------------------------
