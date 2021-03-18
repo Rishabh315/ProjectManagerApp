@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ibm.projectManagerBasic.entity.UserDetails;
 
@@ -21,4 +22,12 @@ public interface RepositoryInterface extends CrudRepository<UserDetails, Integer
 	@Modifying
 	@Transactional
 	public void updateUserDetails(String name, String password, String designation, Integer id); 
+
+	List<UserDetails> findByUserId(int userId);
+
+	public List<UserDetails> findByUserName(String userName);
+
+	
+
+
 }

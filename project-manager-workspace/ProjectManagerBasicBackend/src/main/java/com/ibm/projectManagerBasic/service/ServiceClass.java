@@ -1,6 +1,7 @@
 package com.ibm.projectManagerBasic.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,4 +36,19 @@ public class ServiceClass {
 	public void updateUserDetails(UserDetails user, Integer id) {
 		repo.updateUserDetails(user.getUserName(), user.getUserPassword(), user.getUserDesignation(), id);
 	}
-}
+
+//get users by id
+	   public Optional<UserDetails> getUserById(int id) {
+		return repo.findById(id);
+	}
+
+// get users by name
+	public List<UserDetails> getUserByName(String userName) {
+		return repo.findByUserName(userName);
+		}
+
+	}
+		
+		
+	
+
