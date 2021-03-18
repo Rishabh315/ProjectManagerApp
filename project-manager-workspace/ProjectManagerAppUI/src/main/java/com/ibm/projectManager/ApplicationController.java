@@ -1,6 +1,7 @@
 package com.ibm.projectManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,5 +37,13 @@ public class ApplicationController {
 		url = "http://localhost:8084/backendBasic/edit/" + id;
 		boolean dataEdited = restTemplate.postForObject(url, user, Boolean.class);
 		return "The details are edited successfully";
+	}
+	
+	@DeleteMapping("/deleteUserById/{id}")
+	public String deleteUserById(@PathVariable int id) {
+		url = "http://localhost:8084/backendBasic/delete/" + id;
+		boolean userDeleted = restTemplate.getForObject(url,  Boolean.class);
+		
+		return "User is deleted successfully";
 	}
 }
