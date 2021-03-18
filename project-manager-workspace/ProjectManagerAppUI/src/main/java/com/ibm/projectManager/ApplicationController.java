@@ -44,8 +44,8 @@ public class ApplicationController {
 	
 // view the user Information by using id
 	@RequestMapping("/viewUserData")
-	public String viewUserData(@PathVariable int id) {
-		url = "http://localhost:8084/backendBasic/view/" ;
+	public String viewAllUsersData() {
+		url = "http://localhost:8084/backendBasic/view" ;
       Object []datafetched = restTemplate.getForObject(url, Object[].class);
          List<Object> list= Arrays.asList(datafetched);
 		if(datafetched!=null)
