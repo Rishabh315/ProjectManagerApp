@@ -1,9 +1,13 @@
 package com.ibm.projectManager;
 
+
 import java.util.List;
 import java.util.Optional;
+import java.util.Arrays;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,23 +21,23 @@ import com.ibm.projectManager.bean.UserDetails;
 @RestController
 @RequestMapping("/api")
 public class ApplicationController {
-	
+
 	String url = "";
-	
+
 	@Autowired
 	RestTemplate restTemplate;
-	
+
 	@PostMapping("/addUserData")
 	public String addUserData(@RequestBody UserDetails user) {
 		url = "http://localhost:8084/backendBasic/add";
 		boolean isPhoneNumMatched = restTemplate.postForObject(url, user, Boolean.class);
-		if(!isPhoneNumMatched) {
+		if (!isPhoneNumMatched) {
 			return "Your account was created successfully";
-		}else {
+		} else {
 			return "Your account couldn't be created as Phone Num you entered is already used.";
 		}
 	}
-	
+
 	@PostMapping("/editUserData/{id}")
 	public String editUserData(@PathVariable int id, @RequestBody UserDetails user) {
 		url = "http://localhost:8084/backendBasic/edit/" + id;
@@ -61,4 +65,41 @@ public class ApplicationController {
 	
 	
 	
+
+
+	
+// view the user Information by using id
+	@RequestMapping("/viewUserData")
+	public String viewAllUsersData() {
+		url = "http://localhost:8084/backendBasic/view" ;
+      Object []datafetched = restTemplate.getForObject(url, Object[].class);
+         List<Object> list= Arrays.asList(datafetched);
+		if(datafetched!=null)
+		return "Display all users data successfully";
+		else
+			return "There is no users found";
+		
+
+	}
+	
+
+//	  Validate the user password from database
+	@PostMapping("/pwdValidation")
+	public String pwdValidation(@RequestBody UserDetails user) {
+		url = "http://localhost:8084/backendBasic/pwdvalidation/";
+		boolean ispwd = restTemplate.postForObject(url, user, Boolean.class);
+		if (ispwd)
+			return "your password is correct";
+		else
+			return "password is incorrect";
+
+	}
+
+	@DeleteMapping("/deleteUserById/{id}")
+	public String deleteUserById(@PathVariable int id) {
+		url = "http://localhost:8084/backendBasic/delete/" + id;
+		boolean userDeleted = restTemplate.getForObject(url,  Boolean.class);
+		
+		return "User is deleted successfully";
+	}
 }

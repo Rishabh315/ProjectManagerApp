@@ -26,8 +26,7 @@ public interface RepositoryInterface extends CrudRepository<UserDetails, Integer
 	List<UserDetails> findByUserId(int userId);
 
 	public List<UserDetails> findByUserName(String userName);
-
 	
-
-
+	@Query(value = "select userPassword from UserDetails where userName=?1 ", nativeQuery = true)
+	public String findByUserName(String userName);
 }

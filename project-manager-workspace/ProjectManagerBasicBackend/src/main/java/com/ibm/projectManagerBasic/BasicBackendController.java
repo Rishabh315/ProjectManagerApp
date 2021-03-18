@@ -1,8 +1,12 @@
 package com.ibm.projectManagerBasic;
 
 import java.util.List;
+import java.util.Optional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,6 +35,7 @@ public class BasicBackendController {
 			service.updateUserDetails(user, id);
 			return true;
 		}
+
 		//get users by id
 		@RequestMapping("/user/{id}")
 		<UserDetails> Object getUserById(@PathVariable Integer id){
@@ -54,16 +59,22 @@ public class BasicBackendController {
 		}
 		
 		
+//		 view the user Information by using id
+		@RequestMapping("/view")
+		List<UserDetails> viewAllUserDetails(){
+			return service.viewAllUserDetails();
+		}
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+//		  Validate the user password from database
+		@PostMapping("/pwdvalidation")
+		public  boolean validatePassword(@RequestBody UserDetails user) {
+			System.out.println(user.getUserName());
+			 return service.validatePassword(user);
+			
+		@GetMapping("/delete/{id}")
+		public boolean deleteUserById(@PathVariable Integer id) {
+			service.deleteUserById(id);
+			return true;
+		}
 }
