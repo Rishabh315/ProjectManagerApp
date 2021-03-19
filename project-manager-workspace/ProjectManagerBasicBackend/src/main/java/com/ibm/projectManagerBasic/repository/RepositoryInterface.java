@@ -1,14 +1,11 @@
 package com.ibm.projectManagerBasic.repository;
 
 import java.util.List;
-
 import javax.transaction.Transactional;
-
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-
 import com.ibm.projectManagerBasic.entity.UserDetails;
 
 @Repository
@@ -21,4 +18,9 @@ public interface RepositoryInterface extends CrudRepository<UserDetails, Integer
 	@Modifying
 	@Transactional
 	public void updateUserDetails(String name, String password, String designation, Integer id); 
+
+	public List<UserDetails> findByUserName(String userName);
+
+	@Query(value = "select userPassword from UserDetails where userName=?1 ", nativeQuery = true)
+	public String checkPassword(String userName);
 }
