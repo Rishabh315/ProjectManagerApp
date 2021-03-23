@@ -19,8 +19,8 @@ public class UserDetails {
 	@Column(name = "userName")
 	private String userName;
 	
-	@Column(name = "userPhoneNum")
-	private String userPhoneNum;
+	@Column(name = "userEmailId")
+	private String userEmailId;
 	
 	@Column(name = "userDesignation")
 	private String userDesignation;
@@ -40,12 +40,12 @@ public class UserDetails {
 		this.userName = userName;
 	}
 
-	public String getUserPhoneNum() {
-		return userPhoneNum;
+	public String getUserEmailId() {
+		return userEmailId;
 	}
 
-	public void setUserPhoneNum(String userPhoneNum) {
-		this.userPhoneNum = userPhoneNum;
+	public void setUserEmailId(String userEmailId) {
+		this.userEmailId = userEmailId;
 	}
 
 	public String getUserDesignation() {
