@@ -17,7 +17,7 @@ import com.ibm.projectManagerBasic.service.ServiceClass;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-@RequestMapping("/backendBasic")
+@RequestMapping("/api/user")
 public class BasicBackendController {
 
 		@Autowired
@@ -71,4 +71,10 @@ public class BasicBackendController {
 		public int checkPassword(@RequestBody UserDetails user) {
 			return service.checkPassword(user);
 		}	
+		
+		//search for userId in database
+		@GetMapping("/searchId/{userId}") 
+		boolean searchForId(@PathVariable int userId) {
+			return service.searchForId(userId);
+		}
 }

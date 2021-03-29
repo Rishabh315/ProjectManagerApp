@@ -1,11 +1,8 @@
-package com.ibm.projectManagerBasic.entity;
+package com.ibm.projectManagerTask.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -13,8 +10,6 @@ import javax.persistence.Table;
 public class UserDetails {
 	
 	@Id
-	@SequenceGenerator(name="user_sequence", initialValue = 1, allocationSize = 1)
-	@GeneratedValue(generator = "user_sequence")
 	@Column(name = "userId")
 	private Integer userId;
 	
@@ -36,6 +31,10 @@ public class UserDetails {
 
 	public Integer getUserId() {
 		return this.userId;
+	}
+	
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 	
 	public void setUserName(String userName) {
