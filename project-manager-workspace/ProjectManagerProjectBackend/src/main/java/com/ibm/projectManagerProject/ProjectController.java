@@ -27,7 +27,7 @@ public class ProjectController {
 	
 	// add project details to database
 	@PostMapping("/addProject/{managerId}")
-	public boolean addProject(@RequestBody ProjectDetails projectdetails, @PathVariable int managerId) {
+	public int addProject(@RequestBody ProjectDetails projectdetails, @PathVariable int managerId) {
 		return service.addProject(projectdetails, managerId);
 	}
 

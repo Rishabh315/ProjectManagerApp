@@ -27,8 +27,8 @@ public class TaskController {
 	ServiceClass service;
 	
 	@PostMapping("/create/{projectId}")
-	public void createNewTask(@RequestBody TaskDetails task, @PathVariable int projectId) {
-		service.createNewTask(task, projectId);
+	public int createNewTask(@RequestBody TaskDetails task, @PathVariable int projectId) {
+		return service.createNewTask(task, projectId);
 	}
 	
 	@PostMapping("/assignTask")
@@ -61,8 +61,18 @@ public class TaskController {
 		service.editTaskById(task, taskId);
 	}
 	
+	@GetMapping("/editTaskPercentage/{taskId}/{taskPercentage}")
+	public void editTaskPercentage(@PathVariable int taskId, @PathVariable int taskPercentage) {
+		service.editTaskPercentage(taskId, taskPercentage);
+	}
+	
 	@DeleteMapping("/deleteTaskById/{taskId}")
 	public void deleteTaskById(@PathVariable int taskId) {
 		service.deleteTaskById(taskId);
+	}
+	
+	@DeleteMapping("/deleteTaskByProjectId/{projectId}")
+	public void deleteTaskByProjectId(@PathVariable int projectId) {
+		service.deleteTaskByProjectId(projectId);
 	}
 }

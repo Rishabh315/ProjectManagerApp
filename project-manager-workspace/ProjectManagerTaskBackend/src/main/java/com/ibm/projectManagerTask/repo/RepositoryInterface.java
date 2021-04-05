@@ -20,11 +20,24 @@ public interface RepositoryInterface extends CrudRepository<TaskDetails, Integer
 
 	@Modifying
 	@Transactional
-	@Query(nativeQuery=true, value="update taskdetails set taskName = ?1, taskPriority = ?2, taskRequirements = ?3, taskPercentage = ?4 where taskId = ?5")
-	void editTaskById(String taskName, String taskPriority, String taskRequirements, int taskPercentage, int taskId);
+	@Query(nativeQuery=true, value="update taskdetails set taskName = ?1, taskPriority = ?2, taskRequirements = ?3 where taskId = ?4")
+	void editTaskById(String taskName, String taskPriority, String taskRequirements, int taskId);
 
 	@Query(nativeQuery=true, value = "select * from taskdetails where user_userId = ?1")
 	List<TaskDetails> getTaskByUserId(int userId);
 
 	List<TaskDetails> findByParentProjectProjectId(int projectId);
+
+	@Modifying
+	@Transactional
+	@Query(nativeQuery = true, value="update taskdetails set taskPercentage=?2 where taskId=?1")
+	void editTaskPercentage(int taskId, int taskPercentage);
+
+	@Query(nativeQuery=true, value="select next_val from task_sequence")
+	int getTaskId();
+
+	@Modifying
+	@Transactional
+	@Query(nativeQuery=true, value="delete from taskdetails where parentProject_projectId = ?1")
+	void deleteByParentProjectProjectId(int projectId);
 }

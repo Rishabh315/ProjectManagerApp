@@ -23,5 +23,8 @@ public interface RepositoryInterface extends CrudRepository<ProjectDetails, Inte
 	public void updateUserDetails(String name, Date startdate, Date enddate, String requirement, Integer id);
 
 	public List<ProjectDetails> findByManagerUserId(Integer managerId); 
+	
+	@Query(nativeQuery=true, value = "select next_val from project_sequence")
+	public int getProjectId();
 }
 

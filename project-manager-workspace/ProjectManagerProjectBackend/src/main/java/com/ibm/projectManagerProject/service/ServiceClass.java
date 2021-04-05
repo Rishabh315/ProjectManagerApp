@@ -1,6 +1,7 @@
 package com.ibm.projectManagerProject.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.ibm.projectManagerProject.entity.ProjectDetails;
 import com.ibm.projectManagerProject.entity.UserDetails;
@@ -17,13 +18,18 @@ public class ServiceClass {
 	@Autowired
     RepositoryInterface repo;
 	
+	@Autowired
+	RestTemplate restTemplate;
+	
 	//add project details to database
-	public boolean addProject(ProjectDetails projectDetails, int managerId) {
+	public int addProject(ProjectDetails projectDetails, int managerId) {
+		int projectId = repo.getProjectId();
 		UserDetails manager = new UserDetails();
 		manager.setUserId(managerId);
 		projectDetails.setManager(manager);
 		repo.save(projectDetails);
-		return true;
+		
+		return projectId;
 	}
 
 	//view all projects data
@@ -50,6 +56,7 @@ public class ServiceClass {
    
 	//delete project details by id
 	public void deleteProjectById(Integer projectId) {
+		restTemplate.delete("http://localhost:8085/api/task/deleteTaskByProjectId/" + projectId);
 		repo.deleteById(projectId);
 	}
 }
