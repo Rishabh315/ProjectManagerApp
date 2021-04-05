@@ -23,15 +23,19 @@ public class ServiceClass {
 	@Autowired
 	RestTemplate restTemplate;
 	
-	public void createNewTask(TaskDetails task, int projectId) {
+	public int createNewTask(TaskDetails task, int projectId) {
+		int taskId = repo.getTaskId();
+		
 		ProjectDetails project = new ProjectDetails();
 		project.setProjectId(projectId);
 		task.setParentProject(project);
 		repo.save(task);
+		
+		return taskId;
 	}
 
 	public boolean assignTask(AssignTaskData data) {
-		url = "http://localhost:8084/backendBasic/searchId/" + data.getUserId();
+		url = "http://localhost:8084/api/user/searchId/" + data.getUserId();
 		boolean isUserIdFound = restTemplate.getForObject(url, Boolean.class);
 		if(isUserIdFound)
 			repo.assignTaskById(data.getUserId(), data.getTaskId());
@@ -43,7 +47,7 @@ public class ServiceClass {
 	}
 
 	public void editTaskById(TaskDetails task, int taskId) {
-		repo.editTaskById(task.getTaskName(), task.getTaskPriority(), task.getTaskRequirements(), task.getTaskPercentage(), taskId);
+		repo.editTaskById(task.getTaskName(), task.getTaskPriority(), task.getTaskRequirements(), taskId);
 	}
 
 	public void deleteTaskById(int taskId) {
@@ -60,5 +64,14 @@ public class ServiceClass {
 	
 	public List<TaskDetails> findByParentProjectProjectId(int projectId){
 		return repo.findByParentProjectProjectId(projectId);
+	}
+
+	public void editTaskPercentage(int taskId, int taskPercentage) {
+		repo.editTaskPercentage(taskId, taskPercentage);
+	}
+
+	public void deleteTaskByProjectId(int projectId) {
+		// TODO Auto-generated method stub
+		repo.deleteByParentProjectProjectId(projectId);
 	}
 }
